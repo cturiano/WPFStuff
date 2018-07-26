@@ -1,0 +1,30 @@
+﻿<local:BaseDialogUserControl x:Class="Chat.Controls.MessageBoxDialog"
+                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:local="clr-namespace:Chat.Controls">
+
+   <Grid Background="{StaticResource ForegroundLightBrush}">
+      <Grid.RowDefinitions>
+         <RowDefinition Height="Auto" />
+         <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+
+      <TextBlock Text="{Binding Message}"
+                 FontFamily="{StaticResource LatoRegular}"
+                 FontSize="{StaticResource FontSizeRegular}"
+                 Foreground="{StaticResource ForegroundVeryDarkBrush}" />
+
+      <Button Grid.Row="1"
+              Style="{StaticResource BaseButton}"
+              FontSize="{StaticResource FontSizeRegular}"
+              Padding="10 5"
+              HorizontalAlignment="Right"
+              VerticalAlignment="Bottom"
+              Margin="5 5 5 0"
+              Command="{Binding CloseCommand, RelativeSource={RelativeSource AncestorType=local:BaseDialogUserControl}}"
+              Content="{Binding OkText}"
+              IsDefault="True"
+              IsCancel="True" />
+
+   </Grid>
+</local:BaseDialogUserControl>

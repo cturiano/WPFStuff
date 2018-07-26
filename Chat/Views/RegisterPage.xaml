@@ -1,0 +1,57 @@
+﻿<views:BasePage x:TypeArguments="viewModels:RegisterViewModel" x:Class="Chat.Views.RegisterPage"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:views="clr-namespace:Chat.Views"
+                xmlns:attachedProperties="clr-namespace:Chat.AttachedProperties"
+                xmlns:viewModels="clr-namespace:Chat.Core.ViewModels;assembly=Chat.Core"
+                x:Name="Register"
+                mc:Ignorable="d"
+                d:DesignHeight="500" d:DesignWidth="500"
+                >
+
+   <Grid>
+      <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" TextBlock.TextAlignment="Center">
+            <Border Background="{StaticResource ForegroundLightBrush}" CornerRadius="10" Padding="15 50 15 15" Margin="50 50 50 0">
+               <StackPanel>
+                  <TextBlock Text="Register"
+                             FontSize="{StaticResource FontSizeHuge}"
+                             FontFamily="{StaticResource LatoRegular}"
+                             Foreground="{StaticResource TitleBlueBrush}" />
+
+                  <TextBlock Text="It's about to get fun!"
+                             FontSize="{StaticResource FontSizeLarge}"
+                             Foreground="{StaticResource ForegroundDarkBrush}"
+                             Margin="0 0 0 10" />
+
+                  <TextBox x:Name="Email"  
+                           attachedProperties:IsFocusedProperty.Value="True"
+                           Text="{Binding Email}"
+                           Tag="Email" />
+
+                  <PasswordBox x:Name="PasswordText"
+                               Tag="Password"
+                               Margin="0 0 0 20" />
+
+                  <Button Content="Register"
+                          attachedProperties:IsBusyProperty.Value="{Binding RegisterRunning}"
+                          Command="{Binding RegisterCommand}" 
+                          CommandParameter="{Binding ElementName=Register}"
+                          HorizontalAlignment="Center"
+                          Style="{StaticResource BaseButton}"
+                          IsDefault="True"/>
+
+               </StackPanel>
+            </Border>
+
+            <Button Content="I have an account"
+                    HorizontalAlignment="Center"
+                    Style="{StaticResource TextButton}"
+                    Command="{Binding LoginCommand}"/>
+
+         </StackPanel>
+      </ScrollViewer>
+   </Grid>
+</views:BasePage>

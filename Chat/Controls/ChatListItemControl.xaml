@@ -1,0 +1,121 @@
+﻿<UserControl x:Class="Chat.Controls.ChatListItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:Chat.Converters"
+             xmlns:designViewModels="clr-namespace:Chat.Core.ViewModels.DesignViewModels;assembly=Chat.Core"
+             mc:Ignorable="d" d:DesignWidth="300">
+
+   <UserControl.Resources>
+      <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
+         <Setter Property="Template">
+            <Setter.Value>
+               <ControlTemplate TargetType="{x:Type ContentControl}">
+
+                  <Border x:Name="Background"
+                          Background="{StaticResource BackgroundLightBrush}">
+                     
+                     <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding OpenChatCommand}"/>
+                     </Border.InputBindings>
+
+                     <Grid x:Name="Container"
+                           Background="Transparent">
+
+                        <Grid.ColumnDefinitions>
+                           <ColumnDefinition Width="Auto" />
+                           <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Border Width="4"
+                                HorizontalAlignment="Left"
+                                Visibility="{Binding NewContentAvailable, Converter={converters:BoolToVisibilityConverter}}" />
+
+                        <Border Grid.Column="0"
+                                Padding="10 10">
+
+                           <Border Background="{Binding ProfilePictureRGB, Converter={converters:StringRGBToBrushConverter}}"
+                                   Height="40"
+                                   Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                                   CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+
+                              <TextBlock Text="{Binding Initials}"
+                                         VerticalAlignment="Center"
+                                         HorizontalAlignment="Center"
+                                         Foreground="{StaticResource ForegroundLightBrush}"
+                                         FontSize="{StaticResource FontSizeLarge}"
+                                         FontFamily="{StaticResource LatoRegular}" />
+                           </Border>
+                        </Border>
+
+                        <Border Grid.Column="1" Padding="0 0 12 0">
+                           <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                              <TextBlock Text="{Binding Name}"
+                                         Padding="0 0 0 3"
+                                         Foreground="{StaticResource TitleBlueBrush}"
+                                         FontFamily="{StaticResource LatoRegular}" />
+                              <TextBlock Text="{Binding Message}"
+                                         Padding="0 2 0 0"
+                                         Foreground="{StaticResource ForegroundDarkBrush}"
+                                         TextTrimming="CharacterEllipsis"
+                                         FontFamily="{StaticResource LatoRegular}" />
+                           </StackPanel>
+                        </Border>
+                     </Grid>
+                  </Border>
+
+                  <ControlTemplate.Triggers>
+
+                     <DataTrigger Binding="{Binding IsSelected}"
+                                  Value="True">
+                        <Setter Property="Background"
+                                TargetName="Background"
+                                Value="{StaticResource TitleVeryLightBlueBrush}" />
+                     </DataTrigger>
+
+                     <EventTrigger RoutedEvent="MouseEnter">
+                        <BeginStoryboard>
+                           <Storyboard>
+                              <ColorAnimation To="{StaticResource TitleVeryLightBlue}"
+                                              Duration="0:0:0.3"
+                                              Storyboard.TargetName="Container"
+                                              Storyboard.TargetProperty="Background.Color" />
+                           </Storyboard>
+                        </BeginStoryboard>
+                     </EventTrigger>
+
+                     <EventTrigger RoutedEvent="MouseLeave">
+                        <BeginStoryboard>
+                           <Storyboard>
+                              <ColorAnimation To="Transparent"
+                                              Duration="0:0:0.3"
+                                              Storyboard.TargetName="Container"
+                                              Storyboard.TargetProperty="Background.Color" />
+                           </Storyboard>
+                        </BeginStoryboard>
+                     </EventTrigger>
+
+                     <Trigger Property="IsEnabled" Value="False">
+                        <Setter Property="Background"
+                                TargetName="Container"
+                                Value="{StaticResource ForegroundDarkBrush}" />
+                     </Trigger>
+
+                     <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                        <Setter Property="Background"
+                                TargetName="Container"
+                                Value="{StaticResource TitleVeryLightBlueBrush}" />
+                     </DataTrigger>
+
+                  </ControlTemplate.Triggers>
+
+               </ControlTemplate>
+            </Setter.Value>
+         </Setter>
+      </Style>
+   </UserControl.Resources>
+
+   <ContentControl d:DataContext="{x:Static designViewModels:ChatListItemDesignViewModel.Instance}"
+                   Style="{StaticResource ContentStyle}" />
+</UserControl>

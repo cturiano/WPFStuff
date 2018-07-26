@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="Chat.Controls.SideMenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewModels="clr-namespace:Chat.Core.ViewModels;assembly=Chat.Core"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="300">
+   <UserControl.Template>
+      <ControlTemplate TargetType="UserControl">
+         <Border>
+            <Grid>
+               <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="*" />
+               </Grid.RowDefinitions>
+
+               <Grid Height="50" Grid.Row="0" Background="Transparent">
+                  <Grid.ColumnDefinitions>
+                     <ColumnDefinition Width="Auto" />
+                     <ColumnDefinition Width="*" />
+                     <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+
+                  <StackPanel Orientation="Horizontal" Grid.Column="0">
+                     <Button Style="{StaticResource IconButton}"
+                             Content="{StaticResource FontAwesomeChatIcon}" />
+                     <Button Style="{StaticResource IconButton}"
+                             Content="{StaticResource FontAwesomeUserIcon}" />
+                     <Button Style="{StaticResource IconButton}"
+                             Content="{StaticResource FontAwesomePictureIcon}" />
+                  </StackPanel>
+
+                  <Button Foreground="{StaticResource TitleDarkBlueBrush}"
+                          Grid.Column="2" Style="{StaticResource IconButton}"
+                          Content="{StaticResource FontAwesomeCogIcon}"
+                          Command="{Binding SettingsViewModel.OpenCommand, Source={x:Static viewModels:ViewModelLocator.Instance}}"/>
+               </Grid> 
+
+               <Border Grid.Row="1"
+                       Background="{StaticResource BackgroundLightBrush}">
+                   <ContentPresenter />
+               </Border>
+            </Grid>
+         </Border>
+      </ControlTemplate>
+   </UserControl.Template>
+</UserControl>

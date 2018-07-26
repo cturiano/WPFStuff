@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+   <FontFamily x:Key="LatoThin">pack://application;,,,/Fonts/#Lato Thin</FontFamily>
+   <FontFamily x:Key="LatoRegular">pack://application;,,,/Fonts/#Lato Regular</FontFamily>
+   <FontFamily x:Key="LatoBold">pack://application;,,,/Fonts/#Lato Bold</FontFamily>
+   <FontFamily x:Key="FontAwesome">pack://application;,,,/Fonts/#FontAwesome</FontFamily>
+
+   <system:Double x:Key="FontSizeTiny">10</system:Double>
+   <system:Double x:Key="FontSizeSmall">12</system:Double>
+   <system:Double x:Key="FontSizeRegular">14</system:Double>
+   <system:Double x:Key="FontSizeLarge">20</system:Double>
+   <system:Double x:Key="FontSizeXLarge">24</system:Double>
+   <system:Double x:Key="FontSizeHuge">30</system:Double>
+
+   <system:String x:Key="FontAwesomeChatIcon">&#xf086;</system:String>
+   <system:String x:Key="FontAwesomeUserIcon">&#xf007;</system:String>
+   <system:String x:Key="FontAwesomePictureIcon">&#xf1c5;</system:String>
+   <system:String x:Key="FontAwesomeCogIcon">&#xf013;</system:String>
+   <system:String x:Key="FontAwesomeSearchIcon">&#xf002;</system:String>
+   <system:String x:Key="FontAwesomeHamburgerIcon">&#xf142;</system:String>
+   <system:String x:Key="FontAwesomeAttachIcon">&#xf0c6;</system:String>
+   <system:String x:Key="FontAwesomeEmojiIcon">&#xf118;</system:String>
+   <system:String x:Key="FontAwesomeFileIcon">&#xf016;</system:String>
+   <system:String x:Key="FontAwesomeFolderIcon">&#xf114;</system:String>
+   <system:String x:Key="FontAwesomeAudioIcon">&#xf1c7;</system:String>
+   <system:String x:Key="FontAwesomeVideoIcon">&#xf1c8;</system:String>  
+   <system:String x:Key="FontAwesomeSaveIcon">&#xf00c;</system:String>
+   <system:String x:Key="FontAwesomeCancelIcon">&#xf00d;</system:String>
+   <system:String x:Key="FontAwesomeEditIcon">&#xf141;</system:String>
+   <system:String x:Key="FontAwesomeArrowIcon">&#xf060;</system:String>
+
+   <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
+      <Setter Property="FontFamily" Value="{StaticResource LatoThin}" />
+      <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+   </Style>
+
+   <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
+      <Setter Property="FontFamily" Value="{StaticResource LatoThin}" />  
+      <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+   </Style>
+
+   <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}" />
+   <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}" />
+   <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}" />
+   <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}" />
+   <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}" />
+
+</ResourceDictionary>

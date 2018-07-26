@@ -1,0 +1,142 @@
+﻿<UserControl x:Class="Chat.Controls.ChatMessageListItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:designViewModels="clr-namespace:Chat.Core.ViewModels.DesignViewModels;assembly=Chat.Core"
+             xmlns:converters="clr-namespace:Chat.Converters"
+             xmlns:attachedProperties="clr-namespace:Chat.AttachedProperties"
+             mc:Ignorable="d" d:DesignWidth="300">
+
+   <Border Padding="5"
+           d:DataContext="{x:Static designViewModels:ChatMessageListItemDesignViewModel.Instance}">
+      <Grid>
+         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+         </Grid.ColumnDefinitions>
+
+         <Border Grid.Column="0"
+                 Visibility="{Binding SentByCurrentUser, Converter={converters:InverseBoolToVisibilityConverter}}"
+                 Padding="0 5 0 10" VerticalAlignment="Top">
+
+            <Border Background="{Binding ProfilePictureRGB, Converter={converters:StringRGBToBrushConverter}}"
+                    Height="40"
+                    Width="{Binding ActualHeight, RelativeSource={RelativeSource Self}}"
+                    CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Self}}">
+
+               <TextBlock Text="{Binding Initials}"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center"
+                          Foreground="{StaticResource ForegroundLightBrush}"
+                          FontSize="{StaticResource FontSizeLarge}"
+                          FontFamily="{StaticResource LatoRegular}" />
+            </Border>
+         </Border>
+
+         <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+               <ColumnDefinition Width="Auto" />
+               <ColumnDefinition Width="*" />
+               <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Path Grid.Column="0"
+                  Margin="0 25 0 25"
+                  Data="M 0,0 L 10,-5 10,5 0,0"
+                  Fill="{Binding SentByCurrentUser, Converter={converters:BoolToColorConverter}}"
+                  Visibility="{Binding SentByCurrentUser, Converter={converters:BoolToCollapsedVisibilityConverter}}" />
+
+            <Grid Grid.Column="1"
+                  HorizontalAlignment="{Binding SentByCurrentUser, Converter={converters:InverseBoolToHorizontalAlignmentConverter}}">
+
+               <Grid.Triggers>
+                  <EventTrigger RoutedEvent="Mouse.MouseEnter">
+                     <BeginStoryboard>
+                        <Storyboard Storyboard.TargetName="Dates" TargetProperty="Opacity">
+                           <DoubleAnimation To="1" Duration="00:00:00.5" />
+                        </Storyboard>
+                     </BeginStoryboard>
+                  </EventTrigger>
+
+                  <EventTrigger RoutedEvent="Mouse.MouseLeave">
+                     <BeginStoryboard>
+                        <Storyboard Storyboard.TargetName="Dates" TargetProperty="Opacity">
+                           <DoubleAnimation To="0" Duration="00:00:00.5" />
+                        </Storyboard>
+                     </BeginStoryboard>
+                  </EventTrigger>
+               </Grid.Triggers>
+
+               <Grid.RowDefinitions>
+                  <RowDefinition Height="*" />
+                  <RowDefinition Height="Auto" />
+               </Grid.RowDefinitions>
+
+               <Border Grid.Row="0"
+                       CornerRadius="10"
+                       Padding="5"
+                       HorizontalAlignment="{Binding SentByCurrentUser, Converter={converters:InverseBoolToHorizontalAlignmentConverter}}"
+                       Background="{Binding SentByCurrentUser, Converter={converters:BoolToColorConverter}}">
+                  <Grid>
+                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                     </Grid.RowDefinitions>
+
+                     <Border Grid.Row="0"
+                             CornerRadius="10"
+                             Visibility="{Binding Converter={converters:HasPropertyToVisibilityConverter}, ConverterParameter='LocalFilePath'}">
+
+                        <Grid>
+                           <TextBlock Style="{StaticResource SpinningText}"
+                                      VerticalAlignment="Center"
+                                      HorizontalAlignment="{Binding SentByCurrentUser, Converter={converters:InverseBoolToHorizontalAlignmentConverter}}" />
+
+                           <Image x:Name="Image"
+                                  attachedProperties:ClipFromBorderProperty.Value="True"
+                                  attachedProperties:AnimateFadeInImageOnLoadProperty.Value="True"
+                                  MaxWidth="400"
+                                  Source="{Binding LocalFilePath, NotifyOnTargetUpdated='True'}" />
+                        </Grid>
+                     </Border>
+
+                     <TextBlock Grid.Row="1"
+                                Margin="0 10"
+                                VerticalAlignment="Center"
+                                TextWrapping="Wrap"
+                                FontSize="{StaticResource FontSizeTiny}"
+                                Foreground="{StaticResource TitleDarkBlueBrush}"
+                                FontFamily="{StaticResource LatoRegular}"
+                                Text="{Binding Message}" />
+                  </Grid>
+               </Border>
+
+               <StackPanel x:Name="Dates"
+                           Opacity="0"
+                           Grid.Row="1"
+                           Orientation="Horizontal">
+
+                  <TextBlock Foreground="{StaticResource ForegroundLightBrush}"
+                             FontSize="{StaticResource FontSizeTiny}"
+                             Text="{Binding MessageSentTime, Converter={converters:TimeToDisplayTimeConverter}}"
+                             Margin="10 0"
+                             HorizontalAlignment="{Binding SentByCurrentUser, Converter={converters:BoolToHorizontalAlignmentConverter}}" />
+
+                  <TextBlock Foreground="{StaticResource TitleDarkBlueBrush}"
+                             FontSize="{StaticResource FontSizeTiny}"
+                             Text="{Binding MessageReadTime, Converter={converters:TimeToReadTimeConverter}}"
+                             Margin="5 0"
+                             HorizontalAlignment="{Binding SentByCurrentUser, Converter={converters:BoolToCollapsedVisibilityConverter}}" />
+               </StackPanel>
+            </Grid>
+
+            <Path Grid.Column="2"
+                  Margin="0 29 0 25"
+                  Data="M 0,-10 L 0,0 10,-5 0,-10"
+                  Fill="{Binding SentByCurrentUser, Converter={converters:BoolToColorConverter}}"
+                  Visibility="{Binding SentByCurrentUser, Converter={converters:InverseBoolToCollapsedVisibilityConverter}}" />
+         </Grid>
+      </Grid>
+   </Border>
+</UserControl>
